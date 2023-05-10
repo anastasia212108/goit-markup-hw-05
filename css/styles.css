@@ -25,6 +25,7 @@ html {
   --color-grey: #2e2f42;
   --color-white: #ffffff;
   /*Others*/
+  --anim-fast: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /*==============================
@@ -82,9 +83,14 @@ Header styles
 ==============================*/
 
 .header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: var(--color-white);
   border-bottom: 1px solid var(--color-cornflower);
   box-shadow: 0px 2px 1px rgba(46, 47, 66, 0.08),
     0px 1px 1px rgba(46, 47, 66, 0.16), 0px 1px 6px rgba(46, 47, 66, 0.08);
+  z-index: 10;
 }
 .header-container {
   display: flex;
@@ -133,20 +139,38 @@ Header styles
   gap: 40px;
 }
 .header-nav-item {
-  padding: 24px 0;
 }
 .header-nav-link {
+  position: relative;
+  display: block;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
   color: var(--color-navy-blue);
-  margin: 24px 0;
   padding: 24px 0;
+  transition: color var(--anim-fast);
 }
 
+.header-nav-link.active {
+  color: var(--color-ocean);
+}
 .header-nav-link:hover,
 .header-nav-link:focus {
   color: var(--color-ocean);
+}
+.header-nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0px;
+  bottom: 0;
+  top: 68px;
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+}
+.header-nav-link.active::after {
+  background: var(--color-ocean);
 }
 .header-adress {
   display: flex;
@@ -172,6 +196,7 @@ Header styles
   line-height: 1.5;
   color: var(--color-slate);
   margin-right: 0px;
+  transition: color var(--anim-fast);
 }
 
 .header-adress-link:hover,
@@ -192,6 +217,7 @@ Hero styles
   max-width: 1440px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 72px;
   background-color: var(--color-navy-blue);
   background-image: linear-gradient(
       rgba(46, 47, 66, 0.7),
@@ -227,7 +253,7 @@ Hero styles
   align-items: center;
   letter-spacing: 0.04em;
   color: var(--color-white);
-  background: var(--color-iris);
+  background-color: var(--color-iris);
   min-width: 169px;
   height: 56px;
   padding: 15px 31px;
@@ -236,10 +262,11 @@ Hero styles
   margin-right: auto;
   margin-left: auto;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  transition: background-color var(--anim-fast);
 }
 .hero-btn:hover,
 .hero-btn:focus {
-  background: var(--color-ocean);
+  background-color: var(--color-ocean);
 }
 /*==============================
 Feature styles
@@ -371,6 +398,7 @@ Social icon
   height: 40px;
   background-color: var(--color-iris);
   border-radius: 50%;
+  transition: background-color var(--anim-fast);
 }
 .team-media-link:hover,
 .team-media-link:focus {
@@ -419,6 +447,7 @@ Customers icon
   border-radius: 4px;
   border-color: var(--color-light-slate);
   color: var(--color-light-slate);
+  transition: color var(--anim-fast), border-color var(--anim-fast);
 }
 .customers-media-link:hover,
 .customers-media-link:focus {
@@ -475,6 +504,8 @@ Icons
   border-radius: 4px;
   border: 1px solid var(--color-cornflower);
   padding: 12px 24px;
+  transition: color var(--anim-fast), background-color var(--anim-fast),
+    box-shadow var(--anim-fast), border var(--anim-fast);
 }
 
 /*==============================
@@ -505,6 +536,7 @@ Icons
 }
 .card-link {
   display: block;
+  transition: box-shadow var(--anim-fast);
 }
 .card-link:hover,
 .card-link:focus {
@@ -512,7 +544,28 @@ Icons
     0px 1px 1px rgba(46, 47, 66, 0.16), 0px 2px 1px rgba(46, 47, 66, 0.08);
 }
 
+.card-thumb {
+  position: relative;
+  overflow: hidden;
+}
 .card-img {
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 40px 32px;
+  width: 100%;
+  height: 100%;
+  color: var(--color-cloud);
+  background-color: var(--color-iris);
+  transform: translateY(100%);
+  transition: transform var(--anim-fast);
+}
+.card-item:hover .overlay {
+  transform: translateY(0);
+}
+.overlay-text {
 }
 .card-text {
   min-height: 120px;
@@ -520,6 +573,7 @@ Icons
   border: 1px solid var(--color-cornflower);
   border-top: none;
 }
+
 /*==============================
 Footer styles
 ==============================*/
@@ -591,6 +645,7 @@ Footer icon
   height: 40px;
   background-color: var(--color-iris);
   border-radius: 50%;
+  transition: background-color var(--anim-fast);
 }
 .footer-media-link:hover,
 .footer-media-link:focus {
@@ -598,4 +653,52 @@ Footer icon
 }
 .footer-icons {
   fill: var(--color-cloud);
+}
+/*==============================
+Modal window
+==============================*/
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(46, 47, 66, 0.4);
+  z-index: 100;
+  transition: opacity var(--anim-fast), visibility var(--anim-fast),
+    scale var(--anim-fast);
+}
+.backdrop.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  scale: 0.7;
+}
+
+.modal {
+  position: absolute;
+  top: calc(50%);
+  left: calc(50%);
+  transform: translate(-50%, -50%);
+  width: 408px;
+  height: 584px;
+  background-color: #fcfcfc;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transition-delay: 250ms;
+}
+.modal-close-btn {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: #e7e9fc;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+.modal-close-icon {
+  fill: var(--color-navy-blue-modal);
 }
