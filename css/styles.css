@@ -25,7 +25,7 @@ html {
   --color-grey: #2e2f42;
   --color-white: #ffffff;
   /*Others*/
-  --anim-fast: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --anim: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /*==============================
@@ -148,7 +148,7 @@ Header styles
   line-height: 1.5;
   color: var(--color-navy-blue);
   padding: 24px 0;
-  transition: color var(--anim-fast);
+  transition: color var(--anim);
 }
 
 .header-nav-link.active {
@@ -162,7 +162,7 @@ Header styles
   content: '';
   position: absolute;
   left: 0px;
-  bottom: 0;
+  bottom: -1px;
   top: 68px;
   display: block;
   width: 100%;
@@ -196,7 +196,7 @@ Header styles
   line-height: 1.5;
   color: var(--color-slate);
   margin-right: 0px;
-  transition: color var(--anim-fast);
+  transition: color var(--anim);
 }
 
 .header-adress-link:hover,
@@ -262,7 +262,7 @@ Hero styles
   margin-right: auto;
   margin-left: auto;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-  transition: background-color var(--anim-fast);
+  transition: background-color var(--anim);
 }
 .hero-btn:hover,
 .hero-btn:focus {
@@ -397,7 +397,7 @@ Social icon
   height: 40px;
   background-color: var(--color-iris);
   border-radius: 50%;
-  transition: background-color var(--anim-fast);
+  transition: background-color var(--anim);
 }
 .team-media-link:hover,
 .team-media-link:focus {
@@ -424,6 +424,7 @@ Customers styles
 .customers-title:not(:last-child) {
   margin-bottom: 72px;
 }
+
 /*==============================
 Customers icon
 ==============================*/
@@ -446,7 +447,7 @@ Customers icon
   border-radius: 4px;
   border-color: var(--color-light-slate);
   color: var(--color-light-slate);
-  transition: color var(--anim-fast), border-color var(--anim-fast);
+  transition: border-color var(--anim), color var(--anim);
 }
 .customers-media-link:hover,
 .customers-media-link:focus {
@@ -475,6 +476,23 @@ Icons
 }
 .icon-item {
 }
+.icon-button {
+  font-family: var(--primary-font);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.04em;
+  color: var(--color-iris);
+  background-color: var(--color-cloud);
+  border-radius: 4px;
+  border: 1px solid var(--color-cornflower);
+  padding: 12px 24px;
+  transition: color var(--anim), background-color var(--anim),
+    box-shadow var(--anim), border var(--anim);
+}
 .icon-button:hover {
   color: var(--color-white);
   background-color: var(--color-ocean);
@@ -489,24 +507,6 @@ Icons
     0px 2px 2px rgba(0, 0, 0, 0.12);
   border: 1px solid transparent;
 }
-.icon-button {
-  font-family: var(--primary-font);
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.5;
-  align-items: center;
-  text-align: center;
-  letter-spacing: 0.04em;
-  color: var(--color-iris);
-  background: var(--color-cloud);
-  border-radius: 4px;
-  border: 1px solid var(--color-cornflower);
-  padding: 12px 24px;
-  transition: color var(--anim-fast), background-color var(--anim-fast),
-    box-shadow var(--anim-fast), border var(--anim-fast);
-}
-
 /*==============================
  card
 ==============================*/
@@ -535,7 +535,7 @@ Icons
 }
 .card-link {
   display: block;
-  transition: box-shadow var(--anim-fast);
+  transition: box-shadow var(--anim);
 }
 .card-link:hover,
 .card-link:focus {
@@ -559,7 +559,7 @@ Icons
   color: var(--color-cloud);
   background-color: var(--color-iris);
   transform: translateY(100%);
-  transition: transform var(--anim-fast);
+  transition: transform var(--anim);
 }
 .card-item:hover .overlay {
   transform: translateY(0);
@@ -644,7 +644,7 @@ Footer icon
   height: 40px;
   background-color: var(--color-iris);
   border-radius: 50%;
-  transition: background-color var(--anim-fast);
+  transition: background-color var(--anim);
 }
 .footer-media-link:hover,
 .footer-media-link:focus {
@@ -664,8 +664,8 @@ Modal window
   height: 100%;
   background: rgba(46, 47, 66, 0.4);
   z-index: 100;
-  transition: opacity var(--anim-fast), visibility var(--anim-fast),
-    scale var(--anim-fast);
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .backdrop.is-hidden {
   opacity: 0;
@@ -680,7 +680,7 @@ Modal window
   left: calc(50%);
   transform: translate(-50%, -50%);
   width: 408px;
-  height: 584px;
+  min-height: 576px;
   background-color: #fcfcfc;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12),
     0px 2px 1px rgba(0, 0, 0, 0.2);
@@ -688,16 +688,31 @@ Modal window
   transition-delay: 250ms;
 }
 .modal-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   position: absolute;
   right: 24px;
   top: 24px;
   width: 24px;
   height: 24px;
   padding: 0;
-  background: #e7e9fc;
+  background-color: #e7e9fc;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
+  transition: background-color var(--anim), border var(--anim);
+}
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+  background-color: var(--color-ocean);
+  border: none;
 }
 .modal-close-icon {
   fill: var(--color-navy-blue-modal);
+  transition: fill var(--anim);
+}
+.modal-close-icon:hover,
+.modal-close-icon:focus {
+  fill: var(--color-white);
 }
